@@ -7,10 +7,12 @@ const char* password = WIFI_PASSWORD;
 
 WebServer server(80);
 
-const int AirBaseValue = 3300;
-const int WaterBaseValue = 1450;
+const int AirBaseValue = 3200;
+const int WaterBaseValue = 1100;
 int soilMoistureValue = 0;
 int soilMoistureValue2 = 0;
+int soilMoistureValue3 = 0;
+int soilMoistureValue4 = 0;
 
 void setup() {
   Serial.begin(115200);
@@ -52,6 +54,8 @@ void handle_Metrics(){
 
   soilMoistureValue = analogRead(32);
   soilMoistureValue2 = analogRead(33);
+  soilMoistureValue3 = analogRead(35);
+  soilMoistureValue4 = analogRead(34);
 
   unsigned long CurrentTime = millis();
 
@@ -59,12 +63,18 @@ void handle_Metrics(){
 
   response += "blumentopf_moisture_value{gpio=\"32\"} " + String(soilMoistureValue);
   response += "\nblumentopf_moisture_value{gpio=\"33\"} " + String(soilMoistureValue2);
+  response += "\nblumentopf_moisture_value{gpio=\"35\"} " + String(soilMoistureValue3);
+  response += "\nblumentopf_moisture_value{gpio=\"34\"} " + String(soilMoistureValue4);
 
   response += "\nblumentopf_water_base{gpio=\"32\"} " + String(WaterBaseValue);
   response += "\nblumentopf_water_base{gpio=\"33\"} " + String(WaterBaseValue);
+  response += "\nblumentopf_water_base{gpio=\"35\"} " + String(WaterBaseValue);
+  response += "\nblumentopf_water_base{gpio=\"34\"} " + String(WaterBaseValue);
 
   response += "\nblumentopf_air_base{gpio=\"32\"} " + String(AirBaseValue);
   response += "\nblumentopf_air_base{gpio=\"33\"} " + String(AirBaseValue);
+  response += "\nblumentopf_air_base{gpio=\"35\"} " + String(AirBaseValue);
+  response += "\nblumentopf_air_base{gpio=\"34\"} " + String(AirBaseValue);
 
   response += "\nblumentopf_scrape_duration_milliseconds " + String(CurrentTime - StartTime);
   response += "\nblumentopf_uptime_milliseconds " + String(StartTime);
